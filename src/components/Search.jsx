@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const MySwal = withReactContent(Swal);
 
 const Search = () => {
-
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
@@ -31,14 +30,21 @@ const Search = () => {
       return;
     }
 
-    navigate(`/results?keyword=${keyword}`);
-
+    return navigate(`/results?keyword=${keyword}`);
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <input type="text" name="search" />
-      <button type="submit">Buscar</button>
+    <form className="d-flex" role="search" onSubmit={submitHandler}>
+      <input
+        className="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        name="search"
+      ></input>
+      <button className="btn btn-outline-light" type="submit">
+        Search
+      </button>
     </form>
   );
 };
