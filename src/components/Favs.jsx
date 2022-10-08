@@ -1,24 +1,34 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Favs = (props) => {
-  const ratingAverage = (
-    props.favorites
-      .map((favorite) => {
-        return favorite.rating;
-      })
-      .reduce((previousValue, currentValue) => {
-        return parseFloat(previousValue) + parseFloat(currentValue);
-      }, 0) / props.favorites.length
-  ).toFixed(2);
 
-  console.log(ratingAverage)
+  const [averageFav, setAverageFav] = useState(0.0);
 
+  useEffect(() => {
+    const ratingAverage = (
+      props.favorites
+        .map((favorite) => {
+          return favorite.rating;
+        })
+        .reduce((previousValue, currentValue) => {
+          return parseFloat(previousValue) + parseFloat(currentValue);
+        }, 0) / props.favorites.length
+    ).toFixed(2);
+
+    if (isNaN(ratingAverage)) {
+      setAverageFav(0.0);
+    } else {
+      setAverageFav(ratingAverage);
+    }
+  }, [props.favorites])
+  
   return (
     <>
       <h4>
         {
-          isNaN(ratingAverage) ?
-          `El rating de tus favoritos es ${ratingAverage}`
+          averageFav !== 0 ?
+          `El rating de tus favoritos es ${averageFav}`
           :
           "Aún no tienes películas agregadas a favoritos"
         }
