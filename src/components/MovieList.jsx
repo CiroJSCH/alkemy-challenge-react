@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const MySwal = withReactContent(Swal);
 
-const MovieList = () => {
+const MovieList = (props) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -16,7 +16,6 @@ const MovieList = () => {
       )
       .then((response) => {
         setMovies(response.data.results);
-        console.log(movies);
       })
       .catch((error) => {
         MySwal.fire({
@@ -34,22 +33,24 @@ const MovieList = () => {
       <div className="row">
         {movies.map((movie, index) => {
           return (
-            <div
-              className="col-3"
-              key={index}
-            >
-              <div className="card">
+            <div className="col-3" key={index}>
+              <div className="card mb-3">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                   className="card-img-top"
-                  alt="..."
+                  alt={`${movie.original_title} poster`}
+                  style={{height:"28rem"}}
                 ></img>
-                <div className="card-body">
+                 <button onClick={props.favFunction} className="favourite-btn" data-movie-id={movie.id} data-movie-average={movie.vote_average}>🖤</button>
+                <div className="card-body" style={{height:"14rem"}}>
                   <h5 className="card-title">{movie.original_title}</h5>
-                  <p className="card-text">{movie.overview.substring(0, 200)}...</p>
+                  <p className="card-text">
+                    {movie.overview.substring(0, 100)}...
+                  </p>
                   <Link
-                    to={`/detalle?movieID=${movie.id}`}
+                    to={`/detail?movieID=${movie.id}`}
                     className="btn btn-primary"
+                    style={{position:"absolute", bottom:"30px"}}
                   >
                     Ver detalle
                   </Link>
