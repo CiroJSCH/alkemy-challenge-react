@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const MySwal = withReactContent(Swal);
 
 const MovieList = (props) => {
+
+  const token = sessionStorage.getItem("token");
+
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
+  
     axios
       .get(
         "https://api.themoviedb.org/3/discover/movie?api_key=9ff3ac9ca47974515307cf24aff660fb&language=es-ES"
@@ -30,6 +34,7 @@ const MovieList = (props) => {
 
   return (
     <>
+      { !token && <Navigate to="/"/> }
       <div className="row">
         {movies.map((movie, index) => {
           return (

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const Favs = (props) => {
+
+  const token = sessionStorage.getItem("token");
 
   const [averageFav, setAverageFav] = useState(0.0);
 
@@ -21,10 +23,12 @@ const Favs = (props) => {
     } else {
       setAverageFav(ratingAverage);
     }
+
   }, [props.favorites])
   
   return (
     <>
+      { !token && <Navigate to="/"/> }
       <h4>
         {
           averageFav !== 0 ?
