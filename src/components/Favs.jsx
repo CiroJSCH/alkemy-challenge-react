@@ -56,7 +56,7 @@ const Favs = (props) => {
                   <h5 className="card-title">{favorite.title}</h5>
                   <p className="card-text">{favorite.description}...</p>
                   <Link
-                    to={`/detail?favoriteID=${favorite.id}`}
+                    to={`/detail?movieID=${favorite.id}`}
                     className="btn btn-primary"
                     style={{position:"absolute", bottom:"30px"}}
                   >
