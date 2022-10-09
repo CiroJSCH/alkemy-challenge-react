@@ -34,51 +34,60 @@ const Favs = (props) => {
   return (
     <>
       {!token && <Navigate to="/" />}
-      {familyCategory === -1 ? (
-        <h3>Agrega una película de categoría familia para ver tus favoritos</h3>
+      {averageFav === 0 ? (
+        <div class="alert alert-primary" role="alert">
+          Aún no tienes películas agregadas a favoritos
+        </div>
       ) : (
         <>
-          <h4>
-            {averageFav !== 0
-              ? `El rating de tus favoritos es ${averageFav}`
-              : "Aún no tienes películas agregadas a favoritos"}
-          </h4>
-          <div className="row">
-            {props.favorites.map((favorite, index) => {
-              return (
-                <div className="col-3" key={index}>
-                  <div className="card">
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500${favorite.img}`}
-                      className="card-img-top"
-                      alt={`${favorite.title} poster`}
-                      style={{ height: "28rem" }}
-                    ></img>
-                    <button
-                      onClick={props.favFunction}
-                      className="favourite-btn"
-                      data-movie-id={favorite.id}
-                      data-movie-average={favorite.vote_average}
-                      data-movie-genres={favorite.genres}
-                    >
-                      🖤
-                    </button>
-                    <div className="card-body" style={{ height: "14rem" }}>
-                      <h5 className="card-title">{favorite.title}</h5>
-                      <p className="card-text">{favorite.description}...</p>
-                      <Link
-                        to={`/detail?movieID=${favorite.id}`}
-                        className="btn btn-primary"
-                        style={{ position: "absolute", bottom: "30px" }}
-                      >
-                        Ver detalle
-                      </Link>
+          {familyCategory === -1 ? (
+            <div class="alert alert-warning" role="alert">
+              Debes agregar una película de categoría familia para ver tus
+              favoritos
+            </div>
+          ) : (
+            <>
+              <div class="alert alert-success" role="alert">
+                {`El rating de tus favoritos es ${averageFav}`}
+              </div>
+              <div className="row">
+                {props.favorites.map((favorite, index) => {
+                  return (
+                    <div className="col-3" key={index}>
+                      <div className="card">
+                        <img
+                          src={`https://image.tmdb.org/t/p/w500${favorite.img}`}
+                          className="card-img-top"
+                          alt={`${favorite.title} poster`}
+                          style={{ height: "28rem" }}
+                        ></img>
+                        <button
+                          onClick={props.favFunction}
+                          className="favourite-btn"
+                          data-movie-id={favorite.id}
+                          data-movie-average={favorite.vote_average}
+                          data-movie-genres={favorite.genres}
+                        >
+                          🖤
+                        </button>
+                        <div className="card-body" style={{ height: "14rem" }}>
+                          <h5 className="card-title">{favorite.title}</h5>
+                          <p className="card-text">{favorite.description}...</p>
+                          <Link
+                            to={`/detail?movieID=${favorite.id}`}
+                            className="btn btn-primary"
+                            style={{ position: "absolute", bottom: "30px" }}
+                          >
+                            Ver detalle
+                          </Link>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </>
       )}
     </>
